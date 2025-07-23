@@ -12,8 +12,8 @@ public class Player : MonoBehaviour
     
     [SerializeField] private float leftPadding = 0.5f;
     [SerializeField] private float rightPadding = 0.5f;
-    [SerializeField] private float topPadding = 5.0f;
-    [SerializeField] private float bottomPadding = 1.0f;
+    [SerializeField] private float topPadding = 3.0f;
+    [SerializeField] private float bottomPadding = 0.5f;
 
     void Start()
     {
