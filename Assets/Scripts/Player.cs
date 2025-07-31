@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        Shooter shooter = GetComponent<Shooter>();
+        shooter = GetComponent<Shooter>();
     }
     
     void Start()

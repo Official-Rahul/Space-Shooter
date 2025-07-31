@@ -7,12 +7,18 @@ public class Shooter : MonoBehaviour
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] float projectileSpeed = 10f;
     [SerializeField] float projectileLifetime = 5f;
-    public bool isFiring = false;
+	[SerializeField] float fireRate = 0.2f;
+    [SerializeField] bool useAI = false;
+    
+    [HideInInspector] public bool isFiring = false;
     Coroutine firingCoroutine;
     
     void Start()
     {
-        
+        if (useAI)
+        {
+            isFiring = true;
+        }
     }
 
     void Update()
@@ -22,18 +28,29 @@ public class Shooter : MonoBehaviour
 
     void Fire()
     {
-        if (isFiring)
+        if (isFiring && firingCoroutine == null)
         {
             firingCoroutine = StartCoroutine(FireContinously());   
         }
-        else
+        else if(!isFiring && firingCoroutine != null)
         {
             StopCoroutine(firingCoroutine);
+            firingCoroutine = null;
         }
     }
 
-    IEnumerable FireContinously()
+    IEnumerator FireContinously()
     {
-        
+        while(true) {
+			GameObject instance = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+            Rigidbody2D rb = instance.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.velocity = transform.up * projectileSpeed;
+            }
+            
+            Destroy(instance, projectileLifetime);
+            yield return new WaitForSeconds(fireRate);
+		}
     }
 }
